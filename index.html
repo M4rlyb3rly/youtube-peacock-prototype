@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouTube × Peacock — Desktop prototype</title>
+<style>
+@font-face {
+  font-family: "Peacock Sans";
+  src: url("https://www.peacocktv.com/static/peacock-toolkit/53.4.0/peacock/fonts/peacocksans-book.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Peacock Sans";
+  src: url("https://www.peacocktv.com/static/peacock-toolkit/53.4.0/peacock/fonts/peacocksans-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Peacock Sans";
+  src: url("https://www.peacocktv.com/static/peacock-toolkit/53.4.0/peacock/fonts/peacocksans-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f3f3f3;
+  --ink: #000;
+  --muted: #5e6163;
+  --card: #fff;
+  --line: #e4e4e4;
+  --field: #cfcfcf;
+  --green: #188038;
+  --nav: #000;
+  --band: #111;
+  --primary: linear-gradient(180deg, #ffe000 0%, #fccc12 50%, #ffa800 100%);
+  --secondary: #323538;
+  --secondary-hover: #494b4e;
+  --radius: 100px;
+  --font: "Peacock Sans", Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+button, input, select { font-family: inherit; }
+button { cursor: pointer; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  height: 64px;
+  background: var(--nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+.logo {
+  background: none;
+  border: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.logo svg { height: 22px; width: auto; display: block; }
+.yt-mark { display: flex; align-items: center; gap: 6px; color: #fff; font-weight: 500; font-size: 16px; letter-spacing: -0.02em; }
+.yt-mark i {
+  width: 22px; height: 16px; border-radius: 4px; background: #ff0033;
+  display: grid; place-items: center;
+}
+.yt-mark.yt-mark-lg { flex: 0 0 auto; }
+.yt-mark.yt-mark-lg i { width: 60px; height: 42px; border-radius: 10px; }
+.yt-mark.yt-mark-lg i::after {
+  border-width: 11px 0 11px 18px;
+  margin-left: 3px;
+}
+.yt-mark i::after {
+  content: "";
+  border-style: solid;
+  border-width: 4px 0 4px 7px;
+  border-color: transparent transparent transparent #fff;
+  margin-left: 1px;
+}
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-account { display: none; align-items: center; gap: 10px; color: #fff; font-size: 13px; }
+.nav-account span { opacity: 0.85; }
+.avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #3a3a3a; color: #fff; display: grid; place-items: center;
+  font-size: 13px; border: 2px solid transparent;
+}
+.avatar:hover { border-color: #fff; background: #555; }
+
+.btn {
+  border: 0;
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  line-height: 1;
+  transition: transform 0.15s ease, filter 0.15s ease, background 0.15s ease;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #000;
+  height: 48px;
+  padding: 0 28px;
+  font-size: 14px;
+}
+.btn-primary:hover:not(:disabled) { transform: scale(1.03); filter: brightness(1.05); }
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+  filter: none;
+}
+.btn-secondary {
+  background: var(--secondary);
+  color: #fff;
+  height: 48px;
+  padding: 0 22px;
+  font-size: 13px;
+}
+.btn-secondary:hover { background: var(--secondary-hover); }
+.btn-grey {
+  background: #e7e7e7;
+  color: #000;
+  height: 32px;
+  padding: 0 16px;
+  font-size: 12px;
+}
+.btn-grey:hover { background: #d5d5d5; }
+.btn-nav { height: 32px; padding: 0 16px; font-size: 10px; letter-spacing: 0.08em; }
+.btn-block { width: 100%; }
+.linkish {
+  background: none; border: 0; color: #0b6bcb; font-size: 14px; padding: 0; text-align: left;
+}
+.linkish:hover { text-decoration: underline; }
+
+.band {
+  background: var(--band);
+  color: #fff;
+  padding: 56px 24px 48px;
+  margin-top: 64px;
+  text-align: center;
+}
+.band h1 { margin: 0; font-size: 56px; font-weight: 700; letter-spacing: -0.03em; }
+.page { padding: 32px 24px 0; }
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 40px 40px;
+}
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.kicker { font-size: 12px; letter-spacing: 0.08em; color: #6b6e70; margin: 0 0 16px; }
+.help { color: #3c3c3c; font-size: 16px; line-height: 1.45; margin: 0 0 20px; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field, .fake-field {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--field);
+  border-radius: 4px;
+  background: #fff;
+  padding: 8px 14px;
+  text-align: left;
+  color: #222;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.field:hover, .fake-field:hover { border-color: #1a1a1a; }
+.field input, .field select {
+  border: 0; outline: 0; font: inherit; width: 100%; background: transparent; padding: 0; color: #111;
+}
+.field small, .fake-field small { font-size: 12px; color: #666; line-height: 1.1; }
+.fake-field.placeholder { color: #6d6d6d; font-size: 16px; }
+.field.valid, .fake-field.valid { border-color: var(--green); }
+.field.valid::after, .fake-field.valid::after {
+  content: "";
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; border-radius: 50%; background: var(--green);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='white' d='M6.2 11.2 2.9 7.9l1.1-1.1 2.2 2.2 5-5 1.1 1.1z'/></svg>");
+  background-size: 14px; background-repeat: no-repeat; background-position: center;
+}
+.note { font-size: 13px; color: #444; line-height: 1.45; }
+.side h2 { margin: 0 0 12px; font-size: 13px; letter-spacing: 0.06em; color: #666; font-weight: 500; }
+.plan-chip { background: #f4f4f4; border-radius: 12px; padding: 16px 18px; }
+.plan-chip strong { display: block; font-size: 18px; }
+.plan-chip span { color: #666; font-size: 14px; }
+.footer {
+  margin-top: 48px;
+  background: #000;
+  color: #c8c8c8;
+  padding: 28px 40px 36px;
+  font-size: 13px;
+}
+.footer-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.footer a { color: #ddd; text-decoration: none; }
+.footer a:hover { color: #fff; text-decoration: underline; }
+.legal { margin-top: 16px; color: #8d8d8d; font-size: 12px; }
+
+/* Landing */
+.landing { background: #000; color: #fff; margin-top: 64px; }
+.hero { max-width: 880px; margin: 0 auto; padding: 72px 24px 48px; text-align: center; }
+.hero h1 { font-size: 52px; line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 16px; font-weight: 700; }
+.hero p.sub { font-size: 22px; margin: 0 0 36px; color: #f2f2f2; }
+.posters { display: flex; gap: 12px; justify-content: center; margin-bottom: 36px; }
+.poster {
+  width: 120px; height: 168px; border-radius: 8px;
+  background: linear-gradient(160deg, #2a2a2a, #111);
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+.poster:nth-child(2) { background: linear-gradient(160deg, #5b2a7a, #1a1030); transform: translateY(-8px); }
+.poster:nth-child(3) { background: linear-gradient(160deg, #1d4e89, #0d1b2e); }
+.poster:nth-child(4) { background: linear-gradient(160deg, #d8d8d8, #8e8e8e); transform: translateY(-8px); }
+.poster:nth-child(5) { background: linear-gradient(160deg, #7a1f1f, #1a0a0a); }
+.offers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 860px; margin: 8px auto 0; text-align: center; }
+.offer {
+  background: #111; border-radius: 12px; padding: 18px 16px 16px; min-height: 148px;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 10px;
+}
+.offer p { margin: 0; font-size: 14px; line-height: 1.35; color: #eee; }
+.plans-strip { padding: 56px 24px 72px; }
+.plans-strip h2 { text-align: center; font-size: 32px; margin: 0 0 28px; }
+.plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 980px; margin: 0 auto; }
+.plan {
+  background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 22px 20px; text-align: left;
+}
+.plan.popular { border-color: #fccc12; }
+.plan h3 { margin: 0 0 6px; font-size: 22px; }
+.plan .price { font-size: 20px; margin: 0 0 10px; }
+.plan ul { margin: 0; padding-left: 18px; color: #ccc; font-size: 14px; line-height: 1.5; }
+.badge { display: inline-block; font-size: 11px; letter-spacing: 0.08em; color: #fccc12; margin-bottom: 8px; }
+
+/* Modal */
+.modal-screen { margin-top: 64px; min-height: calc(100vh - 64px); background: #1a1a1a; position: relative; }
+.dim {
+  position: absolute; inset: 0; background: rgba(0,0,0,.55);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+.modal {
+  position: relative;
+  z-index: 2;
+  width: min(720px, calc(100% - 48px));
+  margin: 80px auto;
+  background: #fff;
+  color: #202124;
+  border-radius: 16px;
+  padding: 28px 36px 24px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+#youtube-auth.is-in .dim { opacity: 1; }
+#youtube-auth.is-in .modal { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .dim, .modal { transition: none; }
+}
+.modal h2 { margin: 8px 0 0; font-size: 28px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.modal .to { color: #5f6368; margin-top: 4px; }
+.g-mark {
+  width: 40px; height: 40px; border-radius: 50%; background: #f1f3f4; color: #5f6368;
+  display: grid; place-items: center; font-weight: 700; font-size: 22px;
+}
+.modal-email {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin-top: 24px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  padding: 16px 12px;
+  background: #fff;
+  text-align: left;
+  color: #5f6368;
+  font-size: 16px;
+  font-weight: 400;
+}
+.modal-email:hover { border-color: #202124; }
+.modal-email.is-filled { padding: 8px 12px 10px; color: #202124; }
+.modal-email small { color: #5f6368; display: block; font-size: 12px; line-height: 1.2; }
+.modal-email strong { display: block; margin-top: 2px; font-weight: 500; font-size: 16px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 12px; align-items: center; margin-top: 28px; }
+.close-x {
+  position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+  border: 0; background: transparent; font-size: 22px; color: #444; border-radius: 50%;
+}
+.close-x:hover { background: #f1f1f1; }
+
+/* Watching */
+.watch {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  padding: 48px 24px;
+}
+.watch h1 { font-size: 48px; margin: 0; font-weight: 500; }
+.profiles { display: flex; gap: 28px; }
+.profile { background: none; border: 0; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 16px; }
+.profile i {
+  width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; font-size: 42px; font-weight: 700;
+}
+.profile:hover i { outline: 3px solid #fff; outline-offset: 4px; }
+.p1 { background: #f5c518; color: #111; }
+.p2 { background: #5b6770; }
+.p3 { background: #2f6f4e; }
+.p4 { background: transparent; border: 2px solid #666; color: #aaa; font-size: 48px; }
+
+.success-copy { max-width: 640px; margin: 0 auto 20px; text-align: center; }
+.success-copy h2 { font-size: 28px; margin: 0 0 8px; }
+.center-btn { display: flex; justify-content: center; }
+
+.band-left {
+  text-align: left;
+  background: #1d1e20;
+  padding: 40px max(40px, calc((100% - 1104px) / 2));
+}
+.band-left h1 {
+  font-size: 64px;
+  line-height: 72px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.success-page { padding-top: 56px; }
+.success-card {
+  max-width: 740px;
+  text-align: left;
+  padding: 32px;
+}
+.success-card h2 {
+  margin: 0 0 8px;
+  max-width: 676px;
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.success-lead {
+  margin: 0 0 32px;
+  max-width: 578px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #a4a5a7;
+}
+.success-lead a { color: #016089; text-decoration: none; }
+.success-lead a:hover { text-decoration: underline; }
+.success-label {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #a4a5a7;
+}
+.success-plan-label { margin-bottom: 16px; }
+.success-value {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.success-rule {
+  border: 0;
+  border-top: 1px solid #e4e4e4;
+  margin: 0 0 16px;
+}
+.success-plan {
+  margin: 0 0 8px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+}
+.success-managed {
+  margin: 0 0 24px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.rail {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-top: 56px;
+}
+.tile {
+  position: relative;
+  aspect-ratio: 240 / 426;
+  color: #fff;
+  background: #111 center / cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  gap: 8px;
+  min-width: 0;
+}
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 48%, rgba(0,0,0,.75) 100%);
+}
+.tile strong, .tile span { position: relative; }
+.tile strong { font-size: clamp(16px, 1.7vw, 24px); line-height: 1.25; font-weight: 700; }
+.tile span { font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0.04em; }
+.success-footer { margin-top: 0; }
+.success-footer .footer-row { justify-content: space-between; }
+.footer-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.footer-social { display: flex; gap: 10px; margin-left: auto; }
+.footer-social a {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #6a6a6a;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+.footer-social svg { width: 14px; height: 14px; display: block; fill: currentColor; }
+
+body.is-watch .nav { display: none; }
+body.is-watch { background: #000; }
+
+@media (max-width: 800px) {
+  .band h1, .hero h1 { font-size: 36px; }
+  .band-left { padding: 32px 24px; }
+  .band-left h1 { font-size: 40px; line-height: 48px; }
+  .success-card h2 { font-size: 32px; line-height: 40px; }
+  .split, .offers, .plan-grid, .row { grid-template-columns: 1fr; }
+  .nav { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <button class="logo" data-go="landing" aria-label="Peacock home">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1607 400" aria-hidden="true"><path d="M1606.99 31.25C1606.99 48.51 1593 62.5 1575.74 62.5C1558.48 62.5 1544.49 48.51 1544.49 31.25C1544.49 13.99 1558.48 0 1575.74 0C1593 0 1606.99 13.99 1606.99 31.25ZM1575.74 84.38C1558.48 84.38 1544.49 98.37 1544.49 115.63C1544.49 132.89 1558.48 146.88 1575.74 146.88C1593 146.88 1606.99 132.89 1606.99 115.63C1606.99 98.37 1593 84.38 1575.74 84.38ZM1575.74 168.75C1558.48 168.75 1544.49 182.74 1544.49 200C1544.49 217.26 1558.48 231.25 1575.74 231.25C1593 231.25 1606.99 217.26 1606.99 200C1606.99 182.74 1593 168.75 1575.74 168.75ZM1575.74 253.12C1558.48 253.12 1544.49 267.11 1544.49 284.37C1544.49 301.63 1558.48 315.62 1575.74 315.62C1593 315.62 1606.99 301.63 1606.99 284.37C1606.99 267.11 1593 253.12 1575.74 253.12ZM1575.74 337.5C1558.48 337.5 1544.49 351.49 1544.49 368.75C1544.49 386.01 1558.48 400 1575.74 400C1593 400 1606.99 386.01 1606.99 368.75C1606.99 351.49 1593 337.5 1575.74 337.5Z" fill="url(#pwob_gradient)"></path><path d="M1213.52 89.3501C1228.9 89.3501 1243.49 92.5101 1256.9 99.2101V155.6C1245.86 145.74 1229.29 138.25 1212.33 138.25C1178.81 138.25 1153.18 165.46 1153.18 200.56C1153.18 235.66 1178.81 262.47 1213.13 261.68C1230.09 261.68 1246.25 255.76 1256.91 245.12V300.72C1242.71 307.03 1228.12 311.37 1212.34 311.37C1150.42 311.37 1100.34 261.68 1100.34 200.56C1100.34 139.44 1151.61 89.3601 1213.53 89.3601L1213.52 89.3501ZM217.7 194.64C217.7 260.32 166.83 312.55 52.85 325.65V395.36H0V200.16C0 130.36 49.3 89.3501 111.22 89.3501C173.14 89.3501 217.7 135.49 217.7 194.64ZM164.85 196.61C164.85 164.27 140.4 139.83 109.24 139.83C78.08 139.83 52.84 161.91 52.84 200.16V275.44C95.17 274.24 164.84 250.53 164.84 196.61H164.85ZM701.21 200.55C701.21 261.67 750.9 311.36 813.21 311.36C828.59 311.36 843.58 307.02 857.39 300.71V245.11C847.14 255.36 830.57 261.67 814.01 261.67C779.7 262.46 754.06 235.25 754.06 200.55C754.06 165.85 779.69 138.24 813.21 138.24C830.17 138.24 846.34 145.73 857.39 155.59V99.2001C843.98 92.5001 829.39 89.3401 814.79 89.3401C752.08 89.3401 701.21 139.03 701.21 200.54V200.55ZM1482.09 305.05L1390.27 196.69L1471.84 95.6501H1407.16L1329.86 198.19V5.36011H1276.62V305.06H1329.86V201.17L1417.81 305.06H1482.09V305.05ZM687.02 210.41V305.05H634.17V282.35C617.9 300.68 594.84 311.36 568.31 311.36C511.91 311.36 465.77 261.67 465.77 201.34C465.77 141.01 513.09 89.3501 577.38 89.3501C649.16 89.3501 687.02 142.19 687.02 210.41ZM633.78 200.55C633.78 165.45 609.33 138.24 576.2 138.24C543.07 138.24 517.43 165.45 517.43 200.55C517.43 235.65 543.07 262.46 576.2 262.46C609.33 262.46 633.78 235.64 633.78 200.55ZM1087.71 200.55C1087.71 261.67 1037.23 311.36 975.31 311.36C913.39 311.36 863.31 261.67 863.31 200.55C863.31 139.43 914.18 89.3501 975.31 89.3501C1036.44 89.3501 1087.71 139.43 1087.71 200.55ZM1034.86 200.55C1034.86 165.06 1008.83 138.24 975.31 138.24C941.79 138.24 916.16 165.45 916.16 200.55C916.16 235.65 941.79 262.46 975.31 262.46C1008.83 262.46 1034.86 235.25 1034.86 200.55ZM451.18 198.19C451.18 203.32 450.78 211.99 450 221.06H285.4C293.39 246.8 316.95 262.86 350.23 262.86C375.47 262.86 399.53 253.79 420.03 236.44V291.25C402.28 303.87 377.44 311.36 348.65 311.36C280.03 311.36 231.12 266.01 231.12 202.13C231.12 138.25 281.21 89.3501 343.12 89.3501C405.03 89.3501 451.58 137.85 451.18 198.19ZM285.8 178.87H396.36C389.54 154.39 369.48 137.86 342.73 137.86C315.98 137.86 293.77 154.42 285.81 178.87H285.8Z" fill="white"></path><defs><linearGradient id="pwob_gradient" x1="1575.74" y1="-0.83" x2="1575.74" y2="400.19" gradientUnits="userSpaceOnUse"><stop stop-color="#FFDC23"></stop><stop offset="0.16" stop-color="#FF8700"></stop><stop offset="0.21" stop-color="#FF5401"></stop><stop offset="0.37" stop-color="#D9005A"></stop><stop offset="0.42" stop-color="#C814C8"></stop><stop offset="0.58" stop-color="#8250FF"></stop><stop offset="0.63" stop-color="#6E64FF"></stop><stop offset="0.79" stop-color="#00C8FF"></stop><stop offset="0.84" stop-color="#00CC99"></stop><stop offset="0.99" stop-color="#00A637"></stop></linearGradient></defs></svg>
+    <span class="yt-mark" id="nav-partner" hidden><i></i> YouTube</span>
+  </button>
+  <div class="nav-actions" id="nav-signed-out">
+    <button class="btn btn-secondary btn-nav" id="nav-signin" data-go="sign-in">Sign In</button>
+    <button class="btn btn-primary btn-nav" data-go="plans">Get Started</button>
+  </div>
+  <div class="nav-account" id="nav-signed-in">
+    <span>Watch Peacock</span>
+    <span class="avatar" title="Account">E</span>
+  </div>
+</header>
+
+<section class="screen active" id="landing">
+  <div class="landing">
+    <div class="hero">
+      <div class="posters" aria-hidden="true"><div class="poster"></div><div class="poster"></div><div class="poster"></div><div class="poster"></div><div class="poster"></div></div>
+      <h1>Hit Movies, Must-See TV, and Live Sports</h1>
+      <p class="sub">Choose a Peacock plan or bundle to start streaming.</p>
+      <div class="offers">
+        <div class="offer">
+          <strong style="font-size:22px">peacock</strong>
+          <p>Shows, Movies &amp; Sports</p>
+          <button class="btn btn-secondary" data-go="plans">Get Peacock</button>
+        </div>
+        <div class="offer">
+          <strong>tv | peacock</strong>
+          <p>Bundle and Save</p>
+          <button class="btn btn-secondary" data-go="plans">Get Bundle</button>
+        </div>
+      </div>
+    </div>
+    <div class="plans-strip">
+      <h2>Pick a Plan, Cancel Anytime.</h2>
+      <div class="plan-grid">
+        <article class="plan"><h3>Select</h3><p class="price">$8.99/month</p><ul><li>Watch TV, with ads</li><li>Excludes sports and movies</li></ul></article>
+        <article class="plan popular"><span class="badge">MOST POPULAR</span><h3>Premium</h3><p class="price">$12.99/month</p><ul><li>Live sports and events</li><li>Hit movies and originals</li></ul></article>
+        <article class="plan"><h3>Premium Plus</h3><p class="price">$19.99/month</p><ul><li>Downloads</li><li>No ads, limited exceptions</li></ul></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="get-started">
+  <div class="band"><h1>Get started on Peacock</h1></div>
+  <div class="page">
+    <div class="card" style="max-width:640px">
+      <p class="help">Let’s look up your email address. If you don’t have a Peacock account, you’ll be prompted to create one.</p>
+      <div class="stack">
+        <label class="field"><input type="email" placeholder="Email" aria-label="Email"></label>
+        <button class="btn btn-primary btn-block" disabled>Continue</button>
+        <button class="linkish" type="button">I don’t know my email</button>
+      </div>
+    </div>
+    <div class="card" style="max-width:640px;margin-top:16px;display:flex;gap:16px;align-items:center">
+      <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
+      <p class="help" style="margin:0;flex:1"><strong>YouTube Premium or Premium Lite member?</strong><br>Peacock is included with YouTube. Link your account to watch.</p>
+      <button class="btn btn-grey" data-go="confirm-link">Link account</button>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="confirm-link">
+  <div class="band"><h1>Link your account with YouTube</h1></div>
+  <div class="page">
+    <div class="card" style="max-width:640px">
+      <p class="help">Confirm you’d like to link your YouTube account so Peacock can check your Premium or Premium Lite benefit.</p>
+      <button class="btn btn-primary btn-block" data-go="youtube-auth">Link account</button>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="youtube-auth">
+  <div class="modal-screen">
+    <div class="dim"></div>
+    <div class="modal">
+      <button class="close-x" data-go="confirm-link" aria-label="Close">×</button>
+      <div class="g-mark">G</div>
+      <h2>Sign in</h2>
+      <p class="to">to continue to YouTube</p>
+      <button class="modal-email" id="google-email" type="button">Email or phone</button>
+      <div class="modal-actions">
+        <button class="linkish" data-go="plans">Create account</button>
+        <button class="btn btn-secondary" data-go="confirm-email">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="confirm-email">
+  <div class="band"><h1>Confirm your email</h1></div>
+  <div class="page">
+    <div class="card" style="max-width:640px">
+      <p class="help">We’ll use this email to set up your Peacock subscription.</p>
+      <div class="stack">
+        <button class="fake-field placeholder" data-go="confirm-email-filled">Email</button>
+        <button class="btn btn-primary btn-block" disabled>Continue</button>
+        <button class="linkish" type="button">I don’t know my email</button>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="confirm-email-filled">
+  <div class="band"><h1>Confirm your email</h1></div>
+  <div class="page">
+    <div class="card" style="max-width:640px">
+      <p class="help">We’ll use this email to set up your Peacock subscription.</p>
+      <div class="stack">
+        <div class="fake-field valid"><small>Email</small>emma@gmail.com</div>
+        <button class="btn btn-primary btn-block" data-go="link-account">Continue</button>
+        <button class="linkish" type="button">I don’t know my email</button>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="link-account">
+  <div class="band"><h1>Link your YouTube account</h1></div>
+  <div class="page">
+    <div class="card">
+      <div class="split">
+        <div>
+          <p class="kicker">CREATE A PEACOCK ACCOUNT</p>
+          <div class="stack">
+            <button class="fake-field valid" data-go="link-filled"><small>Email</small>emma@gmail.com</button>
+            <button class="fake-field placeholder" data-go="link-filled">Password</button>
+            <button class="fake-field placeholder" data-go="link-filled">Re-enter Password</button>
+            <p class="note">The information below is required.</p>
+            <div class="row">
+              <button class="fake-field placeholder" data-go="link-filled">First Name</button>
+              <button class="fake-field placeholder" data-go="link-filled">Last Name</button>
+            </div>
+            <button class="fake-field placeholder" data-go="link-filled">Gender</button>
+            <div class="row">
+              <button class="fake-field placeholder" data-go="link-filled">Birth Year</button>
+              <button class="fake-field placeholder" data-go="link-filled">Zip Code</button>
+            </div>
+          </div>
+        </div>
+        <div class="side">
+          <h2>YOUR SUBSCRIPTION</h2>
+          <div class="plan-chip"><strong>Premium Monthly</strong><span>Managed by YouTube</span></div>
+          <p class="note" style="margin-top:16px">Peacock subscription available with eligible YouTube service. By activating your subscription, you agree to Peacock’s Terms of Use and Privacy Policy.</p>
+          <button class="btn btn-primary btn-block" style="margin-top:20px" disabled>Link YouTube and Peacock accounts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="link-filled">
+  <div class="band"><h1>Link your YouTube account</h1></div>
+  <div class="page">
+    <div class="card">
+      <div class="split">
+        <div>
+          <p class="kicker">CREATE A PEACOCK ACCOUNT</p>
+          <div class="stack">
+            <div class="fake-field valid"><small>Email</small>emma@gmail.com</div>
+            <div class="fake-field valid"><small>Password</small>••••••••</div>
+            <div class="fake-field valid"><small>Re-enter Password</small>••••••••</div>
+            <p class="note">The information below is required.</p>
+            <div class="row">
+              <div class="fake-field valid"><small>First Name</small>Emma</div>
+              <div class="fake-field valid"><small>Last Name</small>Johnson</div>
+            </div>
+            <div class="fake-field valid"><small>Gender</small>Female</div>
+            <div class="row">
+              <div class="fake-field valid"><small>Birth Year</small>1990</div>
+              <div class="fake-field valid"><small>Zip Code</small>10001</div>
+            </div>
+          </div>
+        </div>
+        <div class="side">
+          <h2>YOUR SUBSCRIPTION</h2>
+          <div class="plan-chip"><strong>Premium Monthly</strong><span>Managed by YouTube</span></div>
+          <p class="note" style="margin-top:16px">Peacock subscription available with eligible YouTube service. By activating your subscription, you agree to Peacock’s Terms of Use and Privacy Policy.</p>
+          <button class="btn btn-primary btn-block" style="margin-top:20px" data-go="success">Link YouTube and Peacock accounts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="success">
+  <div class="band band-left"><h1>Success</h1></div>
+  <div class="page success-page">
+    <div class="card success-card">
+      <h2>Success! You just linked YouTube to Peacock</h2>
+      <p class="success-lead">You can now sign in to watch Peacock on any <a href="https://www.peacocktv.com/help" target="_blank" rel="noreferrer">supported device</a>.</p>
+      <p class="success-label">Your email</p>
+      <p class="success-value">emma@gmail.com</p>
+      <hr class="success-rule">
+      <p class="success-label success-plan-label">Your Peacock plan</p>
+      <p class="success-plan">Premium Monthly</p>
+      <p class="success-managed">Managed by YouTube</p>
+      <button class="btn btn-primary" data-go="watching">Start Watching Peacock</button>
+    </div>
+  </div>
+  <div class="rail" aria-label="What to watch">
+    <article class="tile" style="background-image:url('assets/originals.png')"><strong>Peacock Originals</strong><span>BEL-AIR</span></article>
+    <article class="tile" style="background-image:url('assets/faves.png')"><strong>Timeless<br>Faves</strong><span>THE OFFICE</span></article>
+    <article class="tile" style="background-image:url('assets/hits.png')"><strong>Current Hits</strong><span>CHICAGO FIRE</span></article>
+    <article class="tile" style="background-image:url('assets/crime.png')"><strong>Crime Series</strong><span>DR. DEATH</span></article>
+    <article class="tile" style="background-image:url('assets/drama.png')"><strong>Powerful<br>Drama</strong><span>YELLOWSTONE</span></article>
+    <article class="tile" style="background-image:url('assets/live.png')"><strong>Live Events</strong><span>WWE</span></article>
+  </div>
+  <footer class="footer success-footer">
+    <div class="footer-row">
+      <div class="footer-links">
+        <a href="https://www.peacocktv.com/terms" target="_blank" rel="noreferrer">Terms of Use</a>
+        <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
+        <a href="https://www.peacocktv.com/ca-notice" target="_blank" rel="noreferrer">CA Notice</a>
+        <a href="https://www.peacocktv.com/ad-choices" target="_blank" rel="noreferrer">Ad Choices</a>
+        <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Your Privacy Choices</a>
+        <a href="https://www.peacocktv.com/help" target="_blank" rel="noreferrer">Help</a>
+        <a href="https://www.peacocktv.com/careers" target="_blank" rel="noreferrer">Careers</a>
+        <a href="https://www.peacocktv.com/" target="_blank" rel="noreferrer">Advertise with Us</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/peacocktv" target="_blank" rel="noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8.5V6.8c0-.7.5-1 1.2-1H17V3h-2.1C12.2 3 11 4.4 11 6.6v1.9H9v2.7h2V21h3.5v-9.8h2.3l.4-2.7h-2.7z"/></svg></a>
+        <a href="https://www.tiktok.com/@peacocktv" target="_blank" rel="noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3c.4 2.4 1.8 4 4.2 4.2v2.4c-1.4 0-2.7-.4-3.8-1.2v6.4c0 3.4-2.6 6.2-6.2 6.2S2 18.2 2 14.8c0-3.3 2.5-6 5.8-6.2v2.6c-1.7.2-3 1.6-3 3.4 0 1.9 1.6 3.4 3.5 3.4s3.4-1.5 3.4-3.4V3H14z"/></svg></a>
+        <a href="https://www.youtube.com/peacocktv" target="_blank" rel="noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.2s0-3.2-.4-4.6c-.2-.9-.9-1.6-1.8-1.8C18.2 5.4 12 5.4 12 5.4s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 9 2 12.2 2 12.2s0 3.2.4 4.6c.2.9.9 1.6 1.8 1.8 1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.4.4-4.6.4-4.6zM10 15.5v-6.6l5.2 3.3-5.2 3.3z"/></svg></a>
+        <a href="https://www.instagram.com/peacocktv" target="_blank" rel="noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.4A4.6 4.6 0 1 0 12 16.6 4.6 4.6 0 0 0 12 7.4zm0 7.6a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM17.4 6.8a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 4.2c1.5 0 1.7 0 2.3.1.6 0 1 .1 1.3.3.4.1.6.3.9.6.3.3.5.5.6.9.2.3.3.7.3 1.3.1.6.1.8.1 2.3s0 1.7-.1 2.3c0 .6-.1 1-.3 1.3-.1.4-.3.6-.6.9-.3.3-.5.5-.9.6-.3.2-.7.3-1.3.3-.6.1-.8.1-2.3.1s-1.7 0-2.3-.1c-.6 0-1-.1-1.3-.3-.4-.1-.6-.3-.9-.6-.3-.3-.5-.5-.6-.9-.2-.3-.3-.7-.3-1.3-.1-.6-.1-.8-.1-2.3s0-1.7.1-2.3c0-.6.1-1 .3-1.3.1-.4.3-.6.6-.9.3-.3.5-.5.9-.6.3-.2.7-.3 1.3-.3.6-.1.8-.1 2.3-.1zm0-1.6c-1.5 0-1.7 0-2.4.1-.6 0-1.1.1-1.5.3-.4.2-.8.4-1.1.7-.3.3-.5.7-.7 1.1-.2.4-.3.9-.3 1.5-.1.7-.1.9-.1 2.4s0 1.7.1 2.4c0 .6.1 1.1.3 1.5.2.4.4.8.7 1.1.3.3.7.5 1.1.7.4.2.9.3 1.5.3.7.1.9.1 2.4.1s1.7 0 2.4-.1c.6 0 1.1-.1 1.5-.3.4-.2.8-.4 1.1-.7.3-.3.5-.7.7-1.1.2-.4.3-.9.3-1.5.1-.7.1-.9.1-2.4s0-1.7-.1-2.4c0-.6-.1-1.1-.3-1.5-.2-.4-.4-.8-.7-1.1-.3-.3-.7-.5-1.1-.7-.4-.2-.9-.3-1.5-.3-.7-.1-.9-.1-2.4-.1z"/></svg></a>
+        <a href="https://x.com/peacock" target="_blank" rel="noreferrer" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4.2l4 5.5L16.8 4H20l-6.3 7.6L20.4 20h-4.2l-4.4-6-4.8 6H3.2l6.8-8.2L4 4z"/></svg></a>
+      </div>
+    </div>
+    <p class="legal">Peacock © Peacock TV LLC. All other programs and/or marks are the property of their respective owners. All rights reserved.</p>
+  </footer>
+</section>
+
+<section class="screen" id="watching">
+  <div class="watch">
+    <h1>Who’s Watching</h1>
+    <div class="profiles">
+      <button class="profile"><i class="p1">E</i>Emma</button>
+      <button class="profile"><i class="p2">K</i>Kids</button>
+      <button class="profile"><i class="p3">G</i>Guest</button>
+      <button class="profile"><i class="p4">+</i>Add</button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="plans">
+  <div class="band"><h1>Pick a plan</h1></div>
+  <div class="page">
+    <div class="plan-grid" style="max-width:980px">
+      <article class="plan" style="background:#fff;color:#111;border-color:#e5e5e5"><h3>Select</h3><p class="price">$8.99/month</p><ul><li>Watch TV, with ads</li></ul></article>
+      <article class="plan popular" style="background:#fff;color:#111"><span class="badge">MOST POPULAR</span><h3>Premium</h3><p class="price">$12.99/month</p><ul><li>Live sports, movies, and originals</li></ul><button class="btn btn-primary" style="margin-top:16px" data-go="flex-plan">Choose</button></article>
+      <article class="plan" style="background:#fff;color:#111;border-color:#e5e5e5"><h3>Premium Plus</h3><p class="price">$19.99/month</p><ul><li>Downloads and no ads</li></ul><button class="btn btn-primary" style="margin-top:16px" data-go="flex-plan">Choose</button></article>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="flex-plan">
+  <div class="band"><h1>Get started on Peacock</h1></div>
+  <div class="page">
+    <div class="card" style="max-width:640px">
+      <p class="help">Premium is selected. Enter the email for your Peacock account.</p>
+      <div class="stack">
+        <label class="field"><input type="email" placeholder="Email" aria-label="Email"></label>
+        <button class="btn btn-primary btn-block" data-go="create">Continue</button>
+        <button class="linkish" type="button">I don’t know my email</button>
+      </div>
+    </div>
+    <div class="card" style="max-width:640px;margin-top:16px;display:flex;gap:16px;align-items:center">
+      <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
+      <p class="help" style="margin:0;flex:1"><strong>YouTube Premium or Premium Lite member?</strong><br>Peacock is included with YouTube. Link your account to watch.</p>
+      <button class="btn btn-grey" data-go="confirm-link">Link account</button>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="sign-in">
+  <div class="band"><h1>Sign in</h1></div>
+  <div class="page">
+    <div class="card" style="max-width:640px">
+      <div class="stack">
+        <label class="field"><input type="email" placeholder="Email" value="emma@gmail.com" aria-label="Email"></label>
+        <label class="field"><input type="password" placeholder="Password" aria-label="Password"></label>
+        <button class="btn btn-primary btn-block" data-go="watching">Sign in</button>
+        <button class="btn btn-secondary btn-block" data-go="watching">Sign in without password</button>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="create">
+  <div class="band"><h1>Create an account</h1></div>
+  <div class="page">
+    <div class="card">
+      <div class="split">
+        <div class="stack">
+          <p class="kicker">CREATE AN ACCOUNT</p>
+          <label class="field"><input placeholder="Email" aria-label="Email"></label>
+          <label class="field"><input type="password" placeholder="Password" aria-label="Password"></label>
+          <label class="field"><input type="password" placeholder="Re-enter Password" aria-label="Re-enter Password"></label>
+          <div class="row">
+            <label class="field"><input placeholder="First Name" aria-label="First Name"></label>
+            <label class="field"><input placeholder="Last Name" aria-label="Last Name"></label>
+          </div>
+          <label class="field"><input placeholder="Zip Code" aria-label="Zip Code"></label>
+        </div>
+        <div class="side">
+          <h2>YOUR SUBSCRIPTION</h2>
+          <div class="plan-chip"><strong>Premium Monthly</strong><span>$12.99/month</span></div>
+          <button class="btn btn-primary btn-block" style="margin-top:24px" data-go="payment">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="payment">
+  <div class="band"><h1>Payment details</h1></div>
+  <div class="page">
+    <div class="card">
+      <div class="split">
+        <div class="stack">
+          <p class="kicker">CREDIT / DEBIT CARD</p>
+          <div class="row">
+            <label class="field"><input placeholder="First Name" aria-label="First Name"></label>
+            <label class="field"><input placeholder="Last Name" aria-label="Last Name"></label>
+          </div>
+          <label class="field"><input placeholder="Card Number" aria-label="Card Number"></label>
+          <div class="row">
+            <label class="field"><input placeholder="MM/YY" aria-label="Expiration"></label>
+            <label class="field"><input placeholder="CVV" aria-label="CVV"></label>
+          </div>
+        </div>
+        <div class="side">
+          <h2>YOUR SUBSCRIPTION</h2>
+          <div class="plan-chip"><strong>Premium Monthly</strong><span>$12.99/month</span></div>
+          <p class="note" style="margin-top:12px">Today’s total <strong>$12.99</strong></p>
+          <button class="btn btn-primary btn-block" style="margin-top:20px" data-go="success-bau">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<section class="screen" id="success-bau">
+  <div class="band"><h1>Success</h1></div>
+  <div class="page">
+    <div class="card" style="max-width:720px;text-align:center">
+      <div class="success-copy">
+        <h2>You’re in</h2>
+        <p class="help">Your Peacock subscription is ready.</p>
+      </div>
+      <div class="center-btn"><button class="btn btn-primary" data-go="watching">Start Watching</button></div>
+    </div>
+  </div>
+  <footer class="footer"></footer>
+</section>
+
+<script>
+const PARTNER = new Set(["confirm-link", "youtube-auth"]);
+const SIGNED_IN = new Set(["success", "payment", "success-bau"]);
+const FOOTER = `
+  <div class="footer-row">
+    <a href="https://www.peacocktv.com/terms" target="_blank" rel="noreferrer">Terms of Use</a>
+    <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
+    <a href="https://www.peacocktv.com/ca-notice" target="_blank" rel="noreferrer">CA Notice</a>
+    <a href="https://www.peacocktv.com/ad-choices" target="_blank" rel="noreferrer">Ad Choices</a>
+    <a href="https://www.peacocktv.com/help" target="_blank" rel="noreferrer">Help</a>
+    <a href="https://www.peacocktv.com/careers" target="_blank" rel="noreferrer">Careers</a>
+  </div>
+  <p class="legal">Peacock © Peacock TV LLC. All other programs and/or marks are the property of their respective owners. All rights reserved.</p>`;
+document.querySelectorAll(".footer:not(.success-footer)").forEach((el) => { el.innerHTML = FOOTER; });
+
+let modalTimer = 0;
+function show(id) {
+  const current = document.querySelector(".screen.active");
+  if (current && current.id === "youtube-auth" && id !== "youtube-auth" && current.classList.contains("is-in")) {
+    current.classList.remove("is-in");
+    clearTimeout(modalTimer);
+    modalTimer = setTimeout(() => applyScreen(id), 280);
+    return;
+  }
+  applyScreen(id);
+}
+function applyScreen(id) {
+  clearTimeout(modalTimer);
+  document.querySelectorAll(".screen").forEach((s) => {
+    const on = s.id === id;
+    s.classList.toggle("active", on);
+    if (!on) s.classList.remove("is-in");
+  });
+  document.body.classList.toggle("is-watch", id === "watching");
+  document.getElementById("nav-partner").hidden = !PARTNER.has(id);
+  document.getElementById("nav-signed-out").hidden = PARTNER.has(id) || SIGNED_IN.has(id);
+  document.getElementById("nav-signed-in").style.display = SIGNED_IN.has(id) ? "flex" : "none";
+  document.getElementById("nav-signin").dataset.go = id === "landing" ? "get-started" : "sign-in";
+  window.scrollTo(0, 0);
+  if (id === "youtube-auth") {
+    resetGoogleEmail();
+    const modal = document.getElementById("youtube-auth");
+    requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add("is-in")));
+  }
+}
+function resetGoogleEmail() {
+  const field = document.getElementById("google-email");
+  field.classList.remove("is-filled");
+  field.textContent = "Email or phone";
+}
+document.getElementById("google-email").addEventListener("click", () => {
+  const field = document.getElementById("google-email");
+  if (field.classList.contains("is-filled")) return;
+  field.classList.add("is-filled");
+  field.innerHTML = "<small>Email or phone</small><strong>emma@gmail.com</strong>";
+});
+
+document.body.addEventListener("click", (event) => {
+  const target = event.target.closest("[data-go]");
+  if (!target || target.disabled) return;
+  event.preventDefault();
+  show(target.dataset.go);
+});
+
+show("landing");
+</script>
+</body>
+</html>
