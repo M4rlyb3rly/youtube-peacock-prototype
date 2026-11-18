@@ -181,7 +181,9 @@ button { cursor: pointer; }
   display: flex;
   gap: 16px;
   align-items: center;
+  width: 100%;
   max-width: 640px;
+  min-width: 0;
 }
 .yt-link-copy {
   margin: 0;
@@ -211,6 +213,17 @@ button { cursor: pointer; }
 }
 .band h1 { margin: 0; font-size: 56px; font-weight: 700; letter-spacing: -0.03em; }
 .page { padding: 32px 24px 0; }
+.get-started-col {
+  width: min(640px, 100%);
+  margin: 0 auto;
+}
+.get-started-col .card,
+.get-started-col .or-divider {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
 .card {
   background: var(--card);
   border-radius: 16px;
@@ -670,7 +683,8 @@ body.is-watch { background: #000; }
 <section class="screen" id="get-started">
   <div class="band band-left"><h1>Get started on Peacock</h1></div>
   <div class="page">
-    <div class="card" style="max-width:640px">
+    <div class="get-started-col">
+    <div class="card">
       <p class="help">Let’s look up your email address. If you don’t have a Peacock account, you’ll be prompted to create one.</p>
       <div class="stack">
         <label class="field"><input type="email" placeholder="Email" aria-label="Email"></label>
@@ -683,6 +697,7 @@ body.is-watch { background: #000; }
       <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
       <p class="yt-link-copy"><strong>Get Peacock through YouTube?</strong>Link your YouTube account to start watching on Peacock.</p>
       <button class="btn btn-grey" data-go="youtube-auth">Link account</button>
+    </div>
     </div>
   </div>
   <footer class="footer"></footer>
@@ -928,7 +943,8 @@ body.is-watch { background: #000; }
 <section class="screen" id="flex-plan">
   <div class="band band-left"><h1>Get started on Peacock</h1></div>
   <div class="page">
-    <div class="card" style="max-width:640px">
+    <div class="get-started-col">
+    <div class="card">
       <p class="help">Let’s look up your email address. If you don’t have a Peacock account, you’ll be prompted to create one.</p>
       <div class="stack">
         <label class="field"><input type="email" placeholder="Email" aria-label="Email"></label>
@@ -941,6 +957,7 @@ body.is-watch { background: #000; }
       <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
       <p class="yt-link-copy"><strong>Get Peacock through YouTube?</strong>Link your YouTube account to start watching on Peacock.</p>
       <button class="btn btn-grey" data-go="youtube-auth">Link account</button>
+    </div>
     </div>
   </div>
   <footer class="footer"></footer>
