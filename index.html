@@ -158,6 +158,49 @@ button { cursor: pointer; }
   background: none; border: 0; color: #0b6bcb; font-size: 14px; padding: 0; text-align: left;
 }
 .linkish:hover { text-decoration: underline; }
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 640px;
+  margin: 20px auto;
+  color: #6b6b6b;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.or-divider::before,
+.or-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d0d0d0;
+}
+.yt-link-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  max-width: 640px;
+}
+.yt-link-copy {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: #111;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.yt-link-copy strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.yt-link-row .btn-grey {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
 
 .band {
   background: var(--band);
@@ -323,6 +366,100 @@ button { cursor: pointer; }
 .modal-email small { color: #5f6368; display: block; font-size: 12px; line-height: 1.2; }
 .modal-email strong { display: block; margin-top: 2px; font-weight: 500; font-size: 16px; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 12px; align-items: center; margin-top: 28px; }
+.modal-google {
+  width: min(980px, calc(100% - 48px));
+  background: #f8f9fb;
+  color: #202124;
+  padding: 28px 36px 20px;
+}
+.google-card {
+  background: #fff;
+  border-radius: 28px;
+  padding: 28px 32px 24px;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.15);
+}
+.google-g { width: 40px; height: 40px; display: block; }
+.google-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 28px;
+}
+.google-row-end { justify-content: flex-end; margin-top: 20px; }
+.account-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dadce0;
+  border-radius: 16px;
+  background: #fff;
+  padding: 4px 10px 4px 4px;
+  color: #3c4043;
+  font-size: 14px;
+  font-weight: 500;
+}
+.account-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #1a73e8; color: #fff;
+  display: grid; place-items: center; font-size: 13px;
+}
+.account-chip .chev { color: #5f6368; font-size: 12px; }
+.pw-field {
+  position: relative;
+  flex: 0 1 360px;
+  display: block;
+}
+.pw-field input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid #1a73e8;
+  border-radius: 4px;
+  padding: 0 44px 0 14px;
+  font-size: 16px;
+  color: #202124;
+  background: #fff;
+}
+.pw-field input::placeholder { color: #1a73e8; }
+.pw-eye {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 32px; height: 32px;
+  border: 0; background: transparent; color: #5f6368;
+  display: grid; place-items: center;
+}
+.btn-google {
+  background: #1a73e8;
+  color: #fff;
+  height: 36px;
+  padding: 0 22px;
+  border-radius: 18px;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 500;
+}
+.btn-google:hover { filter: brightness(1.05); }
+.google-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  padding: 0 8px;
+  color: #5f6368;
+  font-size: 12px;
+}
+.google-foot-links { display: flex; gap: 18px; }
+.google-foot a { color: #5f6368; text-decoration: none; }
+.google-foot a:hover { text-decoration: underline; }
+@media (max-width: 760px) {
+  .google-row { flex-direction: column; align-items: stretch; }
+  .pw-field { flex-basis: auto; }
+  .google-row-end { flex-direction: row; }
+}
 .close-x {
   position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
   border: 0; background: transparent; font-size: 22px; color: #444; border-radius: 50%;
@@ -538,9 +675,10 @@ body.is-watch { background: #000; }
         <button class="linkish" type="button">I don’t know my email</button>
       </div>
     </div>
-    <div class="card" style="max-width:640px;margin-top:16px;display:flex;gap:16px;align-items:center">
+    <div class="or-divider" role="separator" aria-label="Or">OR</div>
+    <div class="card yt-link-row">
       <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
-      <p class="help" style="margin:0;flex:1"><strong>YouTube Premium or Premium Lite member?</strong><br>Peacock is included with YouTube. Link your account to watch.</p>
+      <p class="yt-link-copy"><strong>Have Peacock through YouTube?</strong>Link your YouTube account to get started on Peacock.</p>
       <button class="btn btn-grey" data-go="confirm-link">Link account</button>
     </div>
   </div>
@@ -551,7 +689,7 @@ body.is-watch { background: #000; }
   <div class="band band-left"><h1>Link your account with YouTube</h1></div>
   <div class="page">
     <div class="card" style="max-width:640px">
-      <p class="help">Confirm you’d like to link your YouTube account so Peacock can check your Premium or Premium Lite benefit.</p>
+      <p class="help">Connect your YouTube account to Peacock.</p>
       <button class="btn btn-primary btn-block" data-go="youtube-auth">Link account</button>
     </div>
   </div>
@@ -568,7 +706,42 @@ body.is-watch { background: #000; }
     <button class="modal-email" id="google-email" type="button">Email or phone</button>
     <div class="modal-actions">
       <button class="linkish" data-go="plans">Create account</button>
-      <button class="btn btn-secondary" data-go="confirm-email">Next</button>
+      <button class="btn btn-secondary" data-go="youtube-password">Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="youtube-password" aria-modal="true" role="dialog" aria-label="Enter your password">
+  <div class="dim" data-go="confirm-link"></div>
+  <div class="modal modal-google">
+    <button class="close-x" data-go="confirm-link" aria-label="Close">×</button>
+    <div class="google-card">
+      <svg class="google-g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34.2 6.1 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 12 24 12c3.1 0 5.8 1.2 8 3.1l5.7-5.7C34.2 6.1 29.4 4 24 4 16.3 4 9.6 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.6-5.2l-6.3-5.3C29.3 35.1 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4 5.5l6.3 5.3C39.9 36.6 44 31 44 24c0-1.2-.1-2.3-.4-3.5z"/></svg>
+      <div class="google-row">
+        <button class="account-chip" type="button">
+          <span class="account-avatar" aria-hidden="true">e</span>
+          emma@gmail.com
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <label class="pw-field">
+          <input id="google-password" type="password" placeholder="Enter your password" aria-label="Enter your password">
+          <button class="pw-eye" id="pw-eye" type="button" aria-label="Show password">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </label>
+      </div>
+      <div class="google-row google-row-end">
+        <button class="linkish" type="button">Forgot password?</button>
+        <button class="btn btn-google" data-go="confirm-email">Next</button>
+      </div>
+    </div>
+    <div class="google-foot">
+      <span>English (United States)</span>
+      <span class="google-foot-links">
+        <a href="https://support.google.com" target="_blank" rel="noreferrer">Help</a>
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy</a>
+        <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms</a>
+      </span>
     </div>
   </div>
 </div>
@@ -748,16 +921,17 @@ body.is-watch { background: #000; }
   <div class="band band-left"><h1>Get started on Peacock</h1></div>
   <div class="page">
     <div class="card" style="max-width:640px">
-      <p class="help">Premium is selected. Enter the email for your Peacock account.</p>
+      <p class="help">Let’s look up your email address. If you don’t have a Peacock account, you’ll be prompted to create one.</p>
       <div class="stack">
         <label class="field"><input type="email" placeholder="Email" aria-label="Email"></label>
         <button class="btn btn-primary btn-block" data-go="create">Continue</button>
         <button class="linkish" type="button">I don’t know my email</button>
       </div>
     </div>
-    <div class="card" style="max-width:640px;margin-top:16px;display:flex;gap:16px;align-items:center">
+    <div class="or-divider" role="separator" aria-label="Or">OR</div>
+    <div class="card yt-link-row">
       <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
-      <p class="help" style="margin:0;flex:1"><strong>YouTube Premium or Premium Lite member?</strong><br>Peacock is included with YouTube. Link your account to watch.</p>
+      <p class="yt-link-copy"><strong>Have Peacock through YouTube?</strong>Link your YouTube account to get started on Peacock.</p>
       <button class="btn btn-grey" data-go="confirm-link">Link account</button>
     </div>
   </div>
@@ -864,40 +1038,41 @@ const FOOTER = `
   <p class="legal">Peacock © Peacock TV LLC. All other programs and/or marks are the property of their respective owners. All rights reserved.</p>`;
 document.querySelectorAll(".footer:not(.success-footer)").forEach((el) => { el.innerHTML = FOOTER; });
 
+const MODALS = new Set(["youtube-auth", "youtube-password"]);
 let modalTimer = 0;
+function activeModal() {
+  return document.querySelector(".modal-overlay.active");
+}
 function show(id) {
-  const modal = document.getElementById("youtube-auth");
-  const modalOpen = modal.classList.contains("active");
-
-  if (id === "youtube-auth") {
-    // If we're opening the modal, ensure confirm-link is active beneath it
+  if (MODALS.has(id)) {
     applyScreen("confirm-link");
-    openModal();
+    openModal(id);
     return;
   }
 
-  if (modalOpen) {
-    // Animate out first
-    closeModal(() => {
-      applyScreen(id);
-    });
+  if (activeModal()) {
+    closeModal(() => applyScreen(id));
     return;
   }
 
   applyScreen(id);
 }
 
-function openModal() {
+function openModal(id) {
   clearTimeout(modalTimer);
-  const modal = document.getElementById("youtube-auth");
-  resetGoogleEmail();
+  document.querySelectorAll(".modal-overlay").forEach((modal) => {
+    if (modal.id !== id) modal.classList.remove("is-in", "active");
+  });
+  if (id === "youtube-auth") resetGoogleEmail();
+  const modal = document.getElementById(id);
   modal.classList.add("active");
   requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add("is-in")));
 }
 
 function closeModal(done) {
   clearTimeout(modalTimer);
-  const modal = document.getElementById("youtube-auth");
+  const modal = activeModal();
+  if (!modal) { if (done) done(); return; }
   modal.classList.remove("is-in");
   modalTimer = setTimeout(() => {
     modal.classList.remove("active");
@@ -923,6 +1098,12 @@ function resetGoogleEmail() {
   field.classList.remove("is-filled");
   field.textContent = "Email or phone";
 }
+document.getElementById("pw-eye").addEventListener("click", () => {
+  const input = document.getElementById("google-password");
+  const showPw = input.type === "password";
+  input.type = showPw ? "text" : "password";
+  document.getElementById("pw-eye").setAttribute("aria-label", showPw ? "Hide password" : "Show password");
+});
 document.getElementById("google-email").addEventListener("click", () => {
   const field = document.getElementById("google-email");
   if (field.classList.contains("is-filled")) return;
