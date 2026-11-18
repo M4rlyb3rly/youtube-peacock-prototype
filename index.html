@@ -253,6 +253,9 @@ button { cursor: pointer; }
   background-size: 14px; background-repeat: no-repeat; background-position: center;
 }
 .note { font-size: 13px; color: #444; line-height: 1.45; }
+.note a, .terms a { color: #016089; text-decoration: none; }
+.terms { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+.terms p { margin: 0; font-size: 13px; color: #444; line-height: 1.45; }
 .side h2 { margin: 0 0 12px; font-size: 13px; letter-spacing: 0.06em; color: #666; font-weight: 500; }
 .plan-chip { background: #f4f4f4; border-radius: 12px; padding: 16px 18px; }
 .plan-chip strong { display: block; font-size: 18px; }
@@ -678,7 +681,7 @@ body.is-watch { background: #000; }
     <div class="or-divider" role="separator" aria-label="Or">OR</div>
     <div class="card yt-link-row">
       <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
-      <p class="yt-link-copy"><strong>Have Peacock through YouTube?</strong>Link your YouTube account to get started on Peacock.</p>
+      <p class="yt-link-copy"><strong>Get Peacock through YouTube?</strong>Link your YouTube account to start watching on Peacock.</p>
       <button class="btn btn-grey" data-go="confirm-link">Link account</button>
     </div>
   </div>
@@ -686,10 +689,10 @@ body.is-watch { background: #000; }
 </section>
 
 <section class="screen" id="confirm-link">
-  <div class="band band-left"><h1>Link your account with YouTube</h1></div>
+  <div class="band band-left"><h1>Link your YouTube account</h1></div>
   <div class="page">
     <div class="card" style="max-width:640px">
-      <p class="help">Connect your YouTube account to Peacock.</p>
+      <p class="help">Sign in with your YouTube details, set up your Peacock account, and start watching.</p>
       <button class="btn btn-primary btn-block" data-go="youtube-auth">Link account</button>
     </div>
   </div>
@@ -750,7 +753,7 @@ body.is-watch { background: #000; }
   <div class="band band-left"><h1>Confirm your email</h1></div>
   <div class="page">
     <div class="card" style="max-width:640px">
-      <p class="help">We’ll use this email to set up your Peacock subscription.</p>
+      <p class="help">Use your YouTube email to continue linking your account.</p>
       <div class="stack">
         <button class="fake-field placeholder" data-go="confirm-email-filled">Email</button>
         <button class="btn btn-primary btn-block" disabled>Continue</button>
@@ -765,7 +768,7 @@ body.is-watch { background: #000; }
   <div class="band band-left"><h1>Confirm your email</h1></div>
   <div class="page">
     <div class="card" style="max-width:640px">
-      <p class="help">We’ll use this email to set up your Peacock subscription.</p>
+      <p class="help">Use your YouTube email to continue linking your account.</p>
       <div class="stack">
         <div class="fake-field valid"><small>Email</small>emma@gmail.com</div>
         <button class="btn btn-primary btn-block" data-go="link-account">Continue</button>
@@ -777,12 +780,12 @@ body.is-watch { background: #000; }
 </section>
 
 <section class="screen" id="link-account">
-  <div class="band band-left"><h1>Link your YouTube account</h1></div>
+  <div class="band band-left"><h1>Finish linking your account</h1></div>
   <div class="page">
     <div class="card">
       <div class="split">
         <div>
-          <p class="kicker">CREATE A PEACOCK ACCOUNT</p>
+          <p class="kicker">CREATE YOUR PEACOCK ACCOUNT</p>
           <div class="stack">
             <button class="fake-field valid" data-go="link-filled"><small>Email</small>emma@gmail.com</button>
             <button class="fake-field placeholder" data-go="link-filled">Password</button>
@@ -797,12 +800,20 @@ body.is-watch { background: #000; }
               <button class="fake-field placeholder" data-go="link-filled">Birth Year</button>
               <button class="fake-field placeholder" data-go="link-filled">Zip Code</button>
             </div>
+            <p class="note">I understand that NBCUniversal might send me marketing messages. By activating a subscription, I agree to the <a href="https://www.peacocktv.com/terms" target="_blank" rel="noreferrer">Terms of Use</a> and <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>.</p>
           </div>
         </div>
         <div class="side">
           <h2>YOUR SUBSCRIPTION</h2>
           <div class="plan-chip"><strong>Premium Monthly</strong><span>Managed by YouTube</span></div>
-          <p class="note" style="margin-top:16px">Peacock subscription available with eligible YouTube service. By activating your subscription, you agree to Peacock’s Terms of Use and Privacy Policy.</p>
+          <div class="terms">
+            <p>Peacock subscription available with eligible YouTube service.</p>
+            <p>If you have an existing Peacock subscription that is billed by a third party other than Peacock (e.g., Apple, Google, Roku, YouTube etc.) you will need to cancel your existing subscription. You can activate this offer only after your existing subscription ends. To view your billing details, visit your Peacock Account at peacocktv.com. Here’s more information on how to cancel.</p>
+            <p>If you have an existing Peacock subscription that is billed directly by Peacock, your existing subscription will automatically be cancelled after activation and effective at your next billing cycle. If you have Premium Plus, your subscription will change to Peacock Premium (with ads) after activation. To resubscribe to Premium Plus, contact YouTube customer care.</p>
+            <p>No refunds or credits will be given for overlapping subscription periods.</p>
+            <p>For complete details about the subscription that you are activating today, visit your YouTube account.</p>
+            <p>By activating your subscription, you agree to Peacock’s <a href="https://www.peacocktv.com/terms" target="_blank" rel="noreferrer">Terms of Use</a> and <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>.</p>
+          </div>
           <button class="btn btn-primary btn-block" style="margin-top:20px" disabled>Link YouTube and Peacock accounts</button>
         </div>
       </div>
@@ -812,12 +823,12 @@ body.is-watch { background: #000; }
 </section>
 
 <section class="screen" id="link-filled">
-  <div class="band band-left"><h1>Link your YouTube account</h1></div>
+  <div class="band band-left"><h1>Finish linking your account</h1></div>
   <div class="page">
     <div class="card">
       <div class="split">
         <div>
-          <p class="kicker">CREATE A PEACOCK ACCOUNT</p>
+          <p class="kicker">CREATE YOUR PEACOCK ACCOUNT</p>
           <div class="stack">
             <div class="fake-field valid"><small>Email</small>emma@gmail.com</div>
             <div class="fake-field valid"><small>Password</small>••••••••</div>
@@ -832,12 +843,20 @@ body.is-watch { background: #000; }
               <div class="fake-field valid"><small>Birth Year</small>1990</div>
               <div class="fake-field valid"><small>Zip Code</small>10001</div>
             </div>
+            <p class="note">I understand that NBCUniversal might send me marketing messages. By activating a subscription, I agree to the <a href="https://www.peacocktv.com/terms" target="_blank" rel="noreferrer">Terms of Use</a> and <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>.</p>
           </div>
         </div>
         <div class="side">
           <h2>YOUR SUBSCRIPTION</h2>
           <div class="plan-chip"><strong>Premium Monthly</strong><span>Managed by YouTube</span></div>
-          <p class="note" style="margin-top:16px">Peacock subscription available with eligible YouTube service. By activating your subscription, you agree to Peacock’s Terms of Use and Privacy Policy.</p>
+          <div class="terms">
+            <p>Peacock subscription available with eligible YouTube service.</p>
+            <p>If you have an existing Peacock subscription that is billed by a third party other than Peacock (e.g., Apple, Google, Roku, YouTube etc.) you will need to cancel your existing subscription. You can activate this offer only after your existing subscription ends. To view your billing details, visit your Peacock Account at peacocktv.com. Here’s more information on how to cancel.</p>
+            <p>If you have an existing Peacock subscription that is billed directly by Peacock, your existing subscription will automatically be cancelled after activation and effective at your next billing cycle. If you have Premium Plus, your subscription will change to Peacock Premium (with ads) after activation. To resubscribe to Premium Plus, contact YouTube customer care.</p>
+            <p>No refunds or credits will be given for overlapping subscription periods.</p>
+            <p>For complete details about the subscription that you are activating today, visit your YouTube account.</p>
+            <p>By activating your subscription, you agree to Peacock’s <a href="https://www.peacocktv.com/terms" target="_blank" rel="noreferrer">Terms of Use</a> and <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>.</p>
+          </div>
           <button class="btn btn-primary btn-block" style="margin-top:20px" data-go="success">Link YouTube and Peacock accounts</button>
         </div>
       </div>
@@ -850,7 +869,7 @@ body.is-watch { background: #000; }
   <div class="band band-left"><h1>Success</h1></div>
   <div class="page success-page">
     <div class="card success-card">
-      <h2>Success! You just linked YouTube to Peacock</h2>
+      <h2>Success! All linked and ready to watch.</h2>
       <p class="success-lead">You can now sign in to watch Peacock on any <a href="https://www.peacocktv.com/help" target="_blank" rel="noreferrer">supported device</a>.</p>
       <p class="success-label">Your email</p>
       <p class="success-value">emma@gmail.com</p>
@@ -931,7 +950,7 @@ body.is-watch { background: #000; }
     <div class="or-divider" role="separator" aria-label="Or">OR</div>
     <div class="card yt-link-row">
       <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
-      <p class="yt-link-copy"><strong>Have Peacock through YouTube?</strong>Link your YouTube account to get started on Peacock.</p>
+      <p class="yt-link-copy"><strong>Get Peacock through YouTube?</strong>Link your YouTube account to start watching on Peacock.</p>
       <button class="btn btn-grey" data-go="confirm-link">Link account</button>
     </div>
   </div>
