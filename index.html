@@ -213,17 +213,78 @@ button { cursor: pointer; }
 }
 .band h1 { margin: 0; font-size: 56px; font-weight: 700; letter-spacing: -0.03em; }
 .page { padding: 32px 24px 0; }
+.get-started-page { padding: 56px 24px 0; }
 .get-started-col {
-  width: min(640px, 100%);
+  width: min(572px, 100%);
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 .get-started-col .card,
 .get-started-col .or-divider {
   width: 100%;
   max-width: none;
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
 }
+.form-card {
+  max-width: 572px;
+  padding: 32px;
+  border-radius: 12px;
+}
+.form-card .help { color: #000; font-size: 16px; line-height: 20px; margin: 0 0 20px; }
+.form-card .stack { gap: 20px; }
+.form-card .field,
+.form-card .fake-field { border-color: #d1d2d3; border-radius: 6px; padding: 0 16px; }
+.form-card .field input::placeholder,
+.form-card .fake-field.placeholder { color: #646669; }
+.form-card .linkish { color: #016089; line-height: 16px; }
+.form-card .btn-primary { font-weight: 700; letter-spacing: 1.12px; }
+.form-card .btn-primary:disabled { opacity: 0.25; }
+.get-started-col .or-divider {
+  gap: 8px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+.get-started-col .or-divider::before,
+.get-started-col .or-divider::after { background: #494b4e; }
+.get-started-col .card.yt-link-row {
+  padding: 24px;
+  border-radius: 8px;
+  gap: 16px;
+}
+.yt-link-icon { display: block; flex: none; width: 62px; height: 43px; }
+.get-started-col .yt-link-copy { color: #000; font-size: 14px; line-height: 20px; }
+.get-started-col .yt-link-copy strong { font-size: 14px; line-height: 20px; margin-bottom: 2px; }
+.get-started-col .yt-link-row .btn-grey {
+  height: 32px;
+  padding: 0 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 12px;
+}
+.footer-full {
+  margin-top: 56px;
+  padding: 20px 56px 56px;
+  color: #a4a5a7;
+  font-size: 16px;
+}
+.footer-full .footer-row { justify-content: space-between; gap: 24px; }
+.footer-full .footer-links { gap: 20px; }
+.footer-full a { color: #a4a5a7; }
+.footer-full .legal { margin-top: 12px; color: #a4a5a7; font-size: 12px; line-height: 16px; }
+.footer-full .footer-social { gap: 24px; }
+.footer-full .footer-social a { width: 32px; height: 32px; }
+.footer-full .footer-social svg { width: 16px; height: 16px; }
+.privacy-choice { display: inline-flex; align-items: center; gap: 6px; }
+.privacy-mark { position: relative; width: 29.2px; height: 14px; flex: none; }
+.privacy-mark img { position: absolute; display: block; }
+.privacy-mark img.back { left: 1.2px; top: 1.2px; }
+.privacy-mark img.front { left: 0; top: 0; }
 .card {
   background: var(--card);
   border-radius: 16px;
@@ -517,7 +578,7 @@ button { cursor: pointer; }
 }
 .band-left h1 {
   font-size: 64px;
-  line-height: 72px;
+  line-height: 68px;
   font-weight: 700;
   letter-spacing: 0;
 }
@@ -682,9 +743,9 @@ body.is-watch { background: #000; }
 
 <section class="screen" id="get-started">
   <div class="band band-left"><h1>Get started on Peacock</h1></div>
-  <div class="page">
+  <div class="page get-started-page">
     <div class="get-started-col">
-    <div class="card">
+    <div class="card form-card">
       <p class="help">Let’s look up your email address. If you don’t have a Peacock account, you’ll be prompted to create one.</p>
       <div class="stack">
         <label class="field"><input type="email" placeholder="Email" aria-label="Email"></label>
@@ -694,13 +755,13 @@ body.is-watch { background: #000; }
     </div>
     <div class="or-divider" role="separator" aria-label="Or">OR</div>
     <div class="card yt-link-row">
-      <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
-      <p class="yt-link-copy"><strong>Get Peacock through YouTube?</strong>Link your YouTube account to start watching on Peacock.</p>
+      <img class="yt-link-icon" src="assets/yt-icon-red.svg" alt="" width="62" height="43">
+      <p class="yt-link-copy"><strong>Link your YouTube account</strong>If you get Peacock with your YouTube plan, link your account in just a few steps.</p>
       <button class="btn btn-grey" data-go="youtube-auth">Link account</button>
     </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer footer-full"></footer>
 </section>
 
 <div class="modal-overlay" id="youtube-auth" aria-modal="true" role="dialog">
@@ -754,10 +815,10 @@ body.is-watch { background: #000; }
 </div>
 
 <section class="screen" id="confirm-email">
-  <div class="band band-left"><h1>Confirm your email address</h1></div>
-  <div class="page">
-    <div class="card" style="max-width:640px">
-      <p class="help">We’ll use this email address to set up your Peacock account.</p>
+  <div class="band band-left"><h1>Got it! Just two more steps to link</h1></div>
+  <div class="page get-started-page">
+    <div class="card form-card">
+      <p class="help">First, enter the email address you’d like to use for your Peacock account.</p>
       <div class="stack">
         <button class="fake-field placeholder" data-go="confirm-email-filled">Email</button>
         <button class="btn btn-primary btn-block" disabled>Continue</button>
@@ -765,14 +826,14 @@ body.is-watch { background: #000; }
       </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer footer-full"></footer>
 </section>
 
 <section class="screen" id="confirm-email-filled">
-  <div class="band band-left"><h1>Confirm your email address</h1></div>
-  <div class="page">
-    <div class="card" style="max-width:640px">
-      <p class="help">We’ll use this email address to set up your Peacock account.</p>
+  <div class="band band-left"><h1>Got it! Just two more steps to link</h1></div>
+  <div class="page get-started-page">
+    <div class="card form-card">
+      <p class="help">First, enter the email address you’d like to use for your Peacock account.</p>
       <div class="stack">
         <div class="fake-field valid"><small>Email</small>emma@gmail.com</div>
         <button class="btn btn-primary btn-block" data-go="link-account">Continue</button>
@@ -780,7 +841,7 @@ body.is-watch { background: #000; }
       </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer footer-full"></footer>
 </section>
 
 <section class="screen" id="link-account">
@@ -823,7 +884,7 @@ body.is-watch { background: #000; }
       </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer footer-full"></footer>
 </section>
 
 <section class="screen" id="link-filled">
@@ -866,15 +927,15 @@ body.is-watch { background: #000; }
       </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer footer-full"></footer>
 </section>
 
 <section class="screen" id="success">
   <div class="band band-left"><h1>Success</h1></div>
   <div class="page success-page">
     <div class="card success-card">
-      <h2>Success! All linked and ready to watch.</h2>
-      <p class="success-lead">You can now sign in to watch Peacock on any <a href="https://www.peacocktv.com/help" target="_blank" rel="noreferrer">supported device</a>.</p>
+      <h2>All set! You’re linked and ready to watch.</h2>
+      <p class="success-lead">You can now watch Peacock anytime on any <a href="https://www.peacocktv.com/help" target="_blank" rel="noreferrer">supported device</a>.</p>
       <p class="success-label">Your email</p>
       <p class="success-value">emma@gmail.com</p>
       <hr class="success-rule">
@@ -942,9 +1003,9 @@ body.is-watch { background: #000; }
 
 <section class="screen" id="flex-plan">
   <div class="band band-left"><h1>Get started on Peacock</h1></div>
-  <div class="page">
+  <div class="page get-started-page">
     <div class="get-started-col">
-    <div class="card">
+    <div class="card form-card">
       <p class="help">Let’s look up your email address. If you don’t have a Peacock account, you’ll be prompted to create one.</p>
       <div class="stack">
         <label class="field"><input type="email" placeholder="Email" aria-label="Email"></label>
@@ -954,13 +1015,13 @@ body.is-watch { background: #000; }
     </div>
     <div class="or-divider" role="separator" aria-label="Or">OR</div>
     <div class="card yt-link-row">
-      <span class="yt-mark yt-mark-lg" style="color:#111" aria-hidden="true"><i></i></span>
-      <p class="yt-link-copy"><strong>Get Peacock through YouTube?</strong>Link your YouTube account to start watching on Peacock.</p>
+      <img class="yt-link-icon" src="assets/yt-icon-red.svg" alt="" width="62" height="43">
+      <p class="yt-link-copy"><strong>Link your YouTube account</strong>If you get Peacock with your YouTube plan, link your account in just a few steps.</p>
       <button class="btn btn-grey" data-go="youtube-auth">Link account</button>
     </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer footer-full"></footer>
 </section>
 
 <section class="screen" id="sign-in">
@@ -1049,7 +1110,7 @@ body.is-watch { background: #000; }
 </section>
 
 <script>
-const PARTNER = new Set(["link-account", "link-filled"]);
+const PARTNER = new Set(["confirm-email", "confirm-email-filled", "link-account", "link-filled"]);
 const SIGNED_IN = new Set(["success", "payment", "success-bau"]);
 const FOOTER = `
   <div class="footer-row">
@@ -1061,7 +1122,24 @@ const FOOTER = `
     <a href="https://www.peacocktv.com/careers" target="_blank" rel="noreferrer">Careers</a>
   </div>
   <p class="legal">Peacock © Peacock TV LLC. All other programs and/or marks are the property of their respective owners. All rights reserved.</p>`;
-document.querySelectorAll(".footer:not(.success-footer)").forEach((el) => { el.innerHTML = FOOTER; });
+document.querySelectorAll(".footer:not(.success-footer):not(.footer-full)").forEach((el) => { el.innerHTML = FOOTER; });
+const SOCIAL = document.querySelector(".success-footer .footer-social").outerHTML;
+const FULL_FOOTER = `
+  <div class="footer-row">
+    <div class="footer-links">
+      <a href="https://www.peacocktv.com/terms" target="_blank" rel="noreferrer">Terms of Use</a>
+      <a href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
+      <a href="https://www.peacocktv.com/ca-notice" target="_blank" rel="noreferrer">CA Notice</a>
+      <a href="https://www.peacocktv.com/ad-choices" target="_blank" rel="noreferrer">Ad Choices</a>
+      <a class="privacy-choice" href="https://www.peacocktv.com/privacy" target="_blank" rel="noreferrer"><span class="privacy-mark" aria-hidden="true"><img class="back" src="assets/privacy-toggle-back.svg" alt="" width="15.7" height="11.6"><img class="front" src="assets/privacy-toggle-front.svg" alt="" width="29.2" height="14"></span>Your Privacy Choices</a>
+      <a href="https://www.peacocktv.com/help" target="_blank" rel="noreferrer">Help</a>
+      <a href="https://www.peacocktv.com/careers" target="_blank" rel="noreferrer">Careers</a>
+      <a href="https://www.peacocktv.com/" target="_blank" rel="noreferrer">Advertise with Us</a>
+    </div>
+    ${SOCIAL}
+  </div>
+  <p class="legal">Peacock © Peacock TV LLC. All other programs and/or marks are the property of their respective owners. All rights reserved.</p>`;
+document.querySelectorAll(".footer-full").forEach((el) => { el.innerHTML = FULL_FOOTER; });
 
 const MODALS = new Set(["youtube-auth", "youtube-password"]);
 let modalTimer = 0;
